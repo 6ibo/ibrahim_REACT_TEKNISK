@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.jsx
+
+import React, { useState } from 'react';
+import CountComponent from './Components/CountComponent.jsx'; // استيراد المكون
 
 function App() {
-  const [count, setCount] = useState(0)
+  // ******* تنفيذ الخطوة 10: رفع الحالة (Shared State) ********
+  
+  // 1. تعريف الحالة المشتركة (Shared State) باستخدام useState
+  const [sharedCount, setSharedCount] = useState(0);
+
+  // 2. تعريف دالة التحديث (Update Function)
+  const incrementCount = () => {
+    // تحديث القيمة في حالة الأب (App)
+    setSharedCount(sharedCount => sharedCount + 1);
+  };
+  // ************************************************************
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+      <h2>Delt Teller (Shared Counter)</h2>
+      <p style={{ color: 'gray' }}>Trykk på hvilken som helst knapp for å øke alle tellere:</p>
+
+      <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+        
+        {/* ******* تنفيذ الخطوة 8: وضع 3 instanser من المكون ******** */}
+        
+        {/* تمرير الحالة والدالة إلى النسخة 1 */}
+        <CountComponent countValue={sharedCount} handleIncrement={incrementCount} />
+        
+        {/* تمرير نفس الحالة والدالة إلى النسخة 2 */}
+        <CountComponent countValue={sharedCount} handleIncrement={incrementCount} />
+        
+        {/* تمرير نفس الحالة والدالة إلى النسخة 3 */}
+        <CountComponent countValue={sharedCount} handleIncrement={incrementCount} />
+        
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
